@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Profile</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous">
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+        <link href="{% static 'assets/css/studentstyle.css' %}"
+            rel="stylesheet" />
+    </head>
+    <body class="stu">
+        <h1 id="hesd">Welcome {{ student_info.name.capitalize }}</h1>
+
+        {% if student_info %}
+        <div class="container">
+            <h2>Your Status</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-md-12">
+                    <label for="profile_pic"></label><br>
+                    {% if student_info.profile.profile_pic %}
+                    <img class="rounded mx-auto d-block"
+                        src="{{ student_info.profile.profile_pic.url }}"
+                        alt="Profile Picture"><br><br><br>
+                    {% else %}
+                    <img class="rounded-circle"
+                        src="https://st3.depositphotos.com/3581215/18899/v/450/depositphotos_188994514-stock-illustration-vector-illustration-male-silhouette-profile.jpg"
+                        alt="Profile Picture"><br><br>
+                </div>
+                <p>No profile picture available.</p>
+                {% endif %}
+                <div class="row g-6">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Name:</label><br>
+                        <input type="text" class="form-control" id="name"
+                            name="name" value="{{ student_info.name }}"
+                            readonly><br><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email:</label><br>
+                        <input class="form-control" type="email" id="email"
+                            name="email" value="{{ student_info.email }}"
+                            readonly><br><br>
+                    </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="phone" >Phone:</label><br>
+                            <input class="form-control" type="tel" id="phone" name="phone"
+                                value="{{ student_info.phone }}"
+                                readonly><br><br>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="address">Address:</label><br>
+                        <textarea class="form-control" id="address" name="address"
+                            rows = "1" readonly>{{ student_info.address }} </textarea><br><br>
+                        </div>
+                        {% if student_info.profile %}
+                        <div class="col-md-6">
+                        <label class="form-label" for="register_no">Register Number:</label><br>
+                        <input class="form-control" type="number" id="register_no" name="register_no"
+                            value="{{ student_info.profile.register_no }}"
+                            readonly><br><br>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="adm_no">Admission Number:</label><br>
+                        <input class="form-control" type="number" id="adm_no" name="adm_no"
+                            value="{{ student_info.profile.adm_no }}"
+                            readonly><br><br>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="gender">Gender:</label><br>
+                        <input class="form-control" type="text" id="gender" name="gender"
+                            value="{{ student_info.profile.gender }}"
+                            readonly><br><br><br>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="dob">Date of Birth:</label><br>
+                        <input class="form-control" type="text" id="dob" name="dob"
+                            value="{{ student_info.profile.dob }}"
+                            readonly><br><br>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="father_name">Father's Name:</label><br>
+                        <input class="form-control" type="text" id="father_name" name="father_name"
+                            value="{{ student_info.profile.father_name }}"
+                            readonly><br><br>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="form-label" for="mothers_name">Mother's Name:</label><br>
+                        <input class="form-control" type="text" id="mothers_name" name="mothers_name"
+                            value="{{ student_info.profile.mothers_name }}"
+                            readonly><br><br>
+                        </div>
+                        
+                    {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        User Has No Profile
+                      </div>
+
+                    {% endif %}
+                    <button class="btn btn-primary" type="submit">
+                        <a href="/student-profile-update/" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Update Your Profile</a>
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        <a href="/student-home/" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Return Home</a>
+                    </button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </body>
+    </html>

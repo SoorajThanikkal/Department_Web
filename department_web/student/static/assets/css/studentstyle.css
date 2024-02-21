@@ -1,0 +1,26 @@
+
+.stu{
+    background-color: whitesmoke;
+}
+img{
+    width: 150px !important;
+    height: 100px;
+    /* border-radius: 50%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+input[type="file"]{
+    display: none;
+}
+
+#hesd {
+    align-items: center;
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+    background: linear-gradient(292.9deg, rgb(254, 105, 241) 28.8%, rgb(182, 44, 248) 70.4%);
+    margin: 0;
+}

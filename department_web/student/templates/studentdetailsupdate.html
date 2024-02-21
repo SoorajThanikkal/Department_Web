@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Update</title>
+    <link rel="stylesheet" href="{% static 'assets/css/studentstyle.css' %}">
+</head>
+<body>
+    <h1>Hello {{user.name}}</h1>
+
+            <h2>Student Information Update</h2>
+            <form method="post" action="/student-profile-update/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" value="{{ user.email }}"><br><br>
+            
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" value="{{ user.name }}"><br><br>
+            
+                <label for="phone">Phone:</label><br>
+                <input type="tel" id="phone" name="phone" value="{{ user.phone }}"><br><br>
+            
+                <label for="address">Address:</label><br>
+                <textarea id="address" name="address">{{ user.address }}</textarea><br><br>
+
+            
+                <div class="controls">
+                    <button type="submit" class="btn btn-success">Update</button>
+                </div>
+            </form>
+            <a href="/student-profile/"> Go to Profile</a>
+</body>
+<script>
+</script>
+</html>
