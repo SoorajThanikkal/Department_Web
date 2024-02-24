@@ -9,7 +9,8 @@ admin.site.register(StudentAcademicModel)
 admin.site.register(SubjectMark)
 admin.site.register(ComputerAttendanceModel)
 admin.site.register(ElectronicsAttendanceModel)
+admin.site.register(Internalmark)
+admin.site.register(Totalmark)
 
 
 
-  

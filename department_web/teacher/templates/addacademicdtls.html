@@ -1,88 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>Updatecademic Details</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</head>
-<body class="container border border-success rounded ">
-    <h1 class="text-center" style="border-bottom: 1px solid;">Update Academic Details</h1><br>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="container border border-success rounded">
+    <h2 class="text-left font-italic">
+      name :{{ student_academic.student.name }}
+    </h2>
+    <h1 class="text-center" style="border-bottom: 1px solid">
+      Update Academic Details
+    </h1>
+    <br />
 
-    <form class="form-group" method="post" action="{% url 'student-mark' id=student_academic.student.id %}">
-        {% csrf_token %}
-        
-        {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    <div class="text-danger">{{ field.errors.as_text }}</div>
-                {% endif %}
-            </div>
-        {% endfor %}
-    
-        <button type="submit" class="btn btn-info">Update Academic Details</button>
+    <form
+      class="form-group"
+      method="post"
+      action="{% url 'student-mark' id=student_academic.student.id %}"
+    >
+      {% csrf_token %} {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }} {% if field.errors %}
+        <div class="text-danger">{{ field.errors.as_text }}</div>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-info">
+        Update Academic Details
+      </button>
     </form>
 
-<!-- Display details of sem_details -->
-{% if student_academic.sem_details %}
+    <!-- Display details of sem_details -->
+    {% if student_academic.sem_details %}
     <h2 class="text-center font-italic">Semester Details</h2>
     <h5>
-        Semester: 
-        <small class="text-muted ">{{ student_academic.sem_details.number }}</small>
-      </h5>
-      <h5>
-        Course:
-        <small class="text-muted"> {{ student_academic.sem_details.course }}</small>
-      </h5>
+      Semester:
+      <small class="text-muted"
+        >{{ student_academic.sem_details.number }}</small
+      >
+    </h5>
+    <h5>
+      Course:
+      <small class="text-muted">
+        {{ student_academic.sem_details.course }}</small
+      >
+    </h5>
     <p></p>
     <ul class="list-group">
-        <li class="list-group-item active">Subjects</li>
-        {% for subject in student_academic.sem_details.subjects.all %}
-            <li class="list-group-item">{{ subject.name }}</li>
-        {% endfor %}
-    </ul><br>
-{% else %}
-<div class="alert alert-warning" role="alert">
-    <p>No semester details available.</p>
-  </div> 
-{% endif %}
-<h2 class="text-center font-italic">Subject Marks</h2>
-<div class="table-responsive-sm">
-<table class="table table-hover" >
+      <li class="list-group-item active">Subjects</li>
+      {% for subject in student_academic.sem_details.subjects.all %}
+      <li class="list-group-item">{{ subject.name }}</li>
+      {% endfor %}
+    </ul>
+    <br />
     
-    <thead>
-        <tr class="bg-primary">
+    <h2 class="text-center font-italic">Subject Marks</h2>
+    <div class="table-responsive-sm">
+      <table class="table table-hover">
+        <thead>
+          <tr class="bg-primary">
             <th scope="col">Semester & Course</th>
             <th scope="col">Subject</th>
             <th scope="col">Marks Obtained</th>
-        </tr>
-        </thead>    
+          </tr>
+        </thead>
         <tbody>
-            {% for subject_mark in student_academic.subjectmark_set.all %}
-            <tr>
-                <th scope="row">{{ subject_mark.semester }}</th>
-                <td>{{ subject_mark.subject.name }}</td>
-                <td>{{ subject_mark.marks_obtained }}</td>
+          {% for subject_mark in student_academic.subjectmark_set.all %}
+          <tr>
+            <th scope="row">{{ subject_mark.semester }}</th>
+            <td>{{ subject_mark.subject.name }}</td>
+            <td>{{ subject_mark.marks_obtained }}</td>
+          </tr>
 
-            </tr>
+          {% endfor %}
         </tbody>
-    {% comment %} <p>Semester: {{ subject_mark.semester }}</p> {% endcomment %}
-    <hr>
+      </table>
+    </div>
+    <h2 class="text-center font-italic">Internal Marks</h2>
+    <div class="table-responsive-sm">
+      <table class="table table-hover">
+        <thead>
+          <tr class="bg-primary">
+            <th scope="col">subjects</th>
+            <th scope="col">internal_mark</th>
+            <th scope="col">assignment mark</th>
+          </tr>
+        </thead>
+        {% for internal_mark in student_academic.internalmark_set.all %}
+        <tr>
+          <th scope="row">{{ internal_mark.subject }}</th>
+          <td>{{ internal_mark.assignment_marks }}</td>
+          <td>{{ internal_mark.internal_marks }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <h2 class="text-center font-italic">Total Marks</h2>
+    <div class="table-responsive-sm">
+      <table class="table table-hover">
+        <thead>
+          <tr class="bg-primary">
+            <th scope="col">semester</th>
+            <th scope="col">Total mark</th>
+          </tr>
+        </thead>
 
-{% empty %}
-   
-</table>
-</div>
-<div class="alert alert-warning" role="alert">
-    <p>No semester details available.</p>
-  </div> 
+        {% for totalmark in student_academic.totalmark_set.all %}
 
-{% endfor %}
-</body>
+        <tr>
+          <td>{{ totalmark.semester }}</td>
+          <td>{{ totalmark.total_marks }}</td>
+        </tr>
+
+        {% endfor %} 
+      </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+      <p>No semester details available.</p>
+    </div>
+    {% endif %}
+  </body>
 </html>
-

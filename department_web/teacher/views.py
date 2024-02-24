@@ -1,13 +1,17 @@
-from django.shortcuts import render
+
 
 # Create your views here.
+
+from decimal import Decimal
 from django.shortcuts import render,redirect
 from public.models import Register
 from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404
 from student.models import StudentProfile
-from .models import StudentAcademicModel,ComputerAttendanceModel,ElectronicsAttendanceModel
-from .forms import StudentAcademicModelForm,SubjectMarkForm
+from .models import StudentAcademicModel,ComputerAttendanceModel,ElectronicsAttendanceModel,Totalmark,Internalmark,SubjectMark
+from .forms import StudentAcademicModelForm,SubjectMarkForm,InternalMarkForm
 import datetime
+from django.http import HttpResponse
 from django.utils import timezone
 
 
@@ -89,6 +93,7 @@ def DeleteStudentView(request, id):
 def StudentAcademicUpdateView(request, id):
     student = get_object_or_404(Register, id=id)
     student_academic, created = StudentAcademicModel.objects.get_or_create(student=student)
+    print(student_academic)
 
     if request.method == 'POST':
         form = StudentAcademicModelForm(request.POST, instance=student_academic)
@@ -186,6 +191,83 @@ def electronic_student_attendance(request):
     
     student_info = {'students': students ,'data' : data ,'iso_date': iso_date}
     return render(request, 'eleattendance.html', student_info)
+
+
+
+
+def add_internal_marks(request, id):
+    student = get_object_or_404(StudentAcademicModel, id=id)    
+
+    if request.method == 'POST':
+        form = InternalMarkForm(request.POST)
+        if form.is_valid():
+            internal_mark = form.save(commit=False)
+            internal_mark.student_academic = student
+            internal_mark.save()
+            return redirect('/student-view/', id=id)
+    else:
+        form = InternalMarkForm()
+
+    context = {
+        'form': form,
+        'student': student,
+    }
+
+    return render(request, 'addinternal.html', context)
+
+from django.db.models import Sum
+
+def calculate_and_save_totals(request, id):
+    print(id)
+    try:
+        student_academic = get_object_or_404(StudentAcademicModel,id=id)
+        print(student_academic)
+        student_academic = StudentAcademicModel.objects.filter(student_id = id).first()
+        subject_marks = SubjectMark.objects.filter(student_academic=student_academic)
+        imark = Internalmark.objects.filter(student_academic=student_academic)
+
+
+        total_marks_obtained = subject_marks.aggregate(total_sum=Sum('marks_obtained'))['total_sum']
+        
+        total_assignment_marks = imark.aggregate(total_sum=Sum('assignment_marks'))['total_sum']
+        
+        total_internal_marks = imark.aggregate(total_sum=Sum('internal_marks'))['total_sum']
+
+        total_sum = total_marks_obtained + total_assignment_marks + total_internal_marks
+        
+        semester_instance = student_academic.sem_details
+
+
+        totalmark, created = Totalmark.objects.get_or_create(student_academic=student_academic, semester=semester_instance)
+        totalmark.total_marks = total_sum
+        totalmark.save()
+
+        return StudentAcademicUpdateView(request,id)
+    except :
+        student_academic = StudentAcademicModel.objects.filter(student_id = id).first()
+        subject_marks = SubjectMark.objects.filter(student_academic=student_academic)
+        imark = Internalmark.objects.filter(student_academic=student_academic)
+
+        total_marks_obtained = subject_marks.aggregate(total_sum=Sum('marks_obtained'))['total_sum']
+        
+        total_assignment_marks = imark.aggregate(total_sum=Sum('assignment_marks'))['total_sum']
+        
+        total_internal_marks = imark.aggregate(total_sum=Sum('internal_marks'))['total_sum']
+
+        total_sum = total_marks_obtained + total_assignment_marks + total_internal_marks
+        
+        semester_instance = student_academic.sem_details
+
+
+        totalmark, created = Totalmark.objects.get_or_create(student_academic=student_academic, semester=semester_instance)
+        totalmark.total_marks = total_sum
+        totalmark.save()
+
+        return StudentAcademicUpdateView(request,id)
+
+
+        
+        
     
     
         

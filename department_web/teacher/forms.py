@@ -15,3 +15,9 @@ class SubjectMarkForm(forms.ModelForm):
         fields = ['subject', 'semester', 'marks_obtained']
         
         
+class InternalMarkForm(forms.ModelForm):
+    class Meta:
+        model = models.Internalmark
+        fields = ['subject', 'assignment_marks', 'internal_marks']
+        
+        

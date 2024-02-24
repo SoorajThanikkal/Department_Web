@@ -28,6 +28,8 @@
             <th scope="col">Delete</th>
             <th scope="col">Add Academic Details</th>
             <th scope="col">Add Marks</th>
+            <th scope="col">Add internal</th>
+            <th scope="col">find Total</th>
           </tr>
         </thead>
        
@@ -43,6 +45,8 @@
             <td><button class="btn btn-danger"><a style="text-decoration: none; color: white;" href="/student-delete/{{student_info.id}}">Delete</a></button></td>
             <td><button class="btn btn-danger"><a style="text-decoration: none; color: white;" href="/student-academic-update/{{student_info.id}}">Add Department</a></button></td>
             <td><button class="btn btn-danger"><a style="text-decoration: none; color: white;" href="/student-mark/{{student_info.id}}">Add Marks</a></button></td>
+            <td><button class="btn btn-danger"><a style="text-decoration: none; color: white;" href="/add-internal-marks/{{student_info.id}}">Add internal</a></button></td>
+            <td><button class="btn btn-danger"><a style="text-decoration: none; color: white;" href="/total/{{student_info.id}}">Find Total</a></button></td>
           </tr>
         {% endfor %}
         </tbody>

@@ -49,7 +49,9 @@ class SubjectMark(models.Model):
     student_academic = models.ForeignKey(StudentAcademicModel, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
+    marks_obtained = models.FloatField(default=0.0)
+    def __str__(self):
+        return f"{self.subject} - {self.student_academic} - {self.marks_obtained}"
     
     
 class ComputerAttendanceModel(models.Model):
@@ -67,6 +69,32 @@ class ElectronicsAttendanceModel(models.Model):
     
     def __str__(self):
         return f"{self.date} - {self.student_academic}"
+    
+    # models.py
+
+
+
+class Internalmark(models.Model):
+    student_academic = models.ForeignKey(StudentAcademicModel, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    assignment_marks = models.FloatField(default=0.0)
+    internal_marks = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f"{self.student_academic} - {self.subject}"
+    
+class Totalmark(models.Model):
+    student_academic = models.ForeignKey(StudentAcademicModel, on_delete=models.CASCADE)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE,null = True)
+    total_marks = models.FloatField(default=0.0, null=True, blank=True)
+
+
+    def __str__(self):
+        return f"{self.semester} - {self.total_marks}"
+    
+
+
+
     
     
 

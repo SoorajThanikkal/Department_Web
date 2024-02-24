@@ -15,5 +15,8 @@ urlpatterns = [
     path('student-mark/<id>',views.add_subject_marks,name='student-mark'),
     path('student-attendance-c/',views.computer_student_attendance,name='Cstudent-att'),
     path('student-attendance-e/',views.electronic_student_attendance,name='Estudent-att'),
+    path('add-internal-marks/<int:id>/', views.add_internal_marks, name='add-internal-marks'),
+    path('total/<int:id>/', views.calculate_and_save_totals, name='find-total'),
+
     
 ]
