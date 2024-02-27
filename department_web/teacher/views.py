@@ -8,8 +8,8 @@ from public.models import Register
 from django.shortcuts import get_object_or_404
 from django.shortcuts import get_list_or_404
 from student.models import StudentProfile
-from .models import StudentAcademicModel,ComputerAttendanceModel,ElectronicsAttendanceModel,Totalmark,Internalmark,SubjectMark
-from .forms import StudentAcademicModelForm,SubjectMarkForm,InternalMarkForm
+from .models import StudentAcademicModel,ComputerAttendanceModel,ElectronicsAttendanceModel,Totalmark,Internalmark,SubjectMark,Event
+from .forms import StudentAcademicModelForm,SubjectMarkForm,InternalMarkForm,EventUploadForm
 import datetime
 from django.http import HttpResponse
 from django.utils import timezone
@@ -265,6 +265,21 @@ def calculate_and_save_totals(request, id):
 
         return StudentAcademicUpdateView(request,id)
 
+
+def EventUploadView(request):
+    if request.method == 'POST':
+        form = EventUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/teacher-index/')
+    else:
+        form = EventUploadForm()
+
+    return render(request, 'eventupload.html', {'form': form})
+
+def EventView(request):
+    events = Event.objects.all()
+    return render(request, 'viewevents.html', {'events': events})
 
         
         

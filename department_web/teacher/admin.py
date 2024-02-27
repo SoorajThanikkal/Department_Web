@@ -11,6 +11,7 @@ admin.site.register(ComputerAttendanceModel)
 admin.site.register(ElectronicsAttendanceModel)
 admin.site.register(Internalmark)
 admin.site.register(Totalmark)
+admin.site.register(Event)
 
 
 

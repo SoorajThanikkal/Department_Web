@@ -92,6 +92,11 @@ class Totalmark(models.Model):
     def __str__(self):
         return f"{self.semester} - {self.total_marks}"
     
+class Event(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    evimg = models.ImageField(upload_to='event-photo/', blank=True)
+     
 
 
 

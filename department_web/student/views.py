@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from .models import StudentProfile
 from public.models import Register
 from datetime import datetime
+from teacher.models import StudentAcademicModel, SubjectMark, Internalmark, Totalmark,Event
 
 
 def StudentHomeView(request):
-    return render(request,'studentindex.html ')
+    events = Event.objects.all()
+    return render(request, 'studentindex.html', {'events':events})
 def StudentLoginView(request):
     from public.views import Role
     if request.method == "POST":
@@ -21,7 +23,7 @@ def StudentLoginView(request):
             request.session['id'] = id
             request.session['email'] = email
             request.session['password'] = password
-            return render(request,'studentindex.html')
+            return redirect(StudentHomeView)
         else:
             return Role(request)
     else:  
@@ -40,13 +42,26 @@ def StdentProfileView(request):
             else:
                 pass
             student_profile = StudentProfile.objects.filter(user=user).first()
+            student_academic = StudentAcademicModel.objects.get(student=user)
+            department = student_academic.sem_details.course.course_name
+            semester_number = student_academic.sem_details.number
+
+                # Fetch subject marks, internal marks, and total marks
+            subject_marks = SubjectMark.objects.filter(student_academic=student_academic)
+            internal_marks = Internalmark.objects.filter(student_academic=student_academic)
+            total_marks = Totalmark.objects.filter(student_academic=student_academic)
 
             student_info = {
                 'name': user.name,
                 'email': user.email,
                 'phone': user.phone,
                 'address': user.address,
-                'profile': student_profile
+                'profile': student_profile,
+                'department': department,
+                'semester_number': semester_number,
+                'subject_marks': subject_marks,
+                'internal_marks': internal_marks,
+                'total_marks': total_marks,
             }
 
             print("Student Info:", student_info)

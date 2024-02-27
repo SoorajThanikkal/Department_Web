@@ -17,6 +17,8 @@ urlpatterns = [
     path('student-attendance-e/',views.electronic_student_attendance,name='Estudent-att'),
     path('add-internal-marks/<int:id>/', views.add_internal_marks, name='add-internal-marks'),
     path('total/<int:id>/', views.calculate_and_save_totals, name='find-total'),
+    path('event-upload/', views.EventUploadView,name='Event-upload'),
+    path('events/', views.EventView,name='events'),
 
     
 ]
