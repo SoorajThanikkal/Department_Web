@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .models import *
+from teacher.models import Event
 from student.views import StudentLoginView
 
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    events = Event.objects.all()
+    return render(request,'index.html', {'events': events})
 
 
 def StudentSignup(request):
